@@ -14,7 +14,7 @@ export default function AdminOrders() {
 
       {orders.map(o => (
         <div key={o._id} className="border p-3 mb-2">
-          <p>User: {o.address?.fullName?.email}</p>
+          <p>User: {o.address?.fullName}</p>
           <p>Street: {o.address?.street}</p>
           <p>City: {o.address?.city}</p>
           <p>State: {o.address?.state}</p>
