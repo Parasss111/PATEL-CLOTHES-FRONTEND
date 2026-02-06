@@ -5,7 +5,13 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    api.get("/api/admin/orders").then(res => setOrders(res.data));
+    api.get("/api/admin/orders").then(res => {
+      // sort newest first
+      const sortedOrders = res.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setOrders(sortedOrders);
+    });
   }, []);
 
   return (
