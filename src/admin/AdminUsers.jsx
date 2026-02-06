@@ -35,6 +35,7 @@ export default function AdminUsers() {
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-center">Role</th> {/* ✅ NEW */}
               <th className="p-3 text-center">Status</th>
               <th className="p-3 text-center">Actions</th>
             </tr>
@@ -49,6 +50,20 @@ export default function AdminUsers() {
                 <td className="p-3 font-medium">{u.name}</td>
                 <td className="p-3">{u.email}</td>
 
+                {/* ✅ ROLE BADGE */}
+                <td className="p-3 text-center">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      u.role === "admin"
+                        ? "bg-purple-100 text-purple-700"
+                        : "bg-blue-100 text-blue-700"
+                    }`}
+                  >
+                    {u.role}
+                  </span>
+                </td>
+
+                {/* STATUS */}
                 <td className="p-3 text-center">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -61,6 +76,7 @@ export default function AdminUsers() {
                   </span>
                 </td>
 
+                {/* ACTIONS */}
                 <td className="p-3 text-center space-x-2">
                   <button
                     onClick={() => blockUser(u._id)}
