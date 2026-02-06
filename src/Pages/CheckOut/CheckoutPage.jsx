@@ -41,7 +41,6 @@ export default function CheckoutPage() {
 
 
   const placeOrder = async () => {
-
   if (cart.length === 0) {
     toast.error("Your cart is empty 🛒");
     navigate("/cart");
@@ -62,21 +61,29 @@ export default function CheckoutPage() {
       image: p.image?.url,
     }));
 
-    await api.post("/api/orders", {
+    const res = await api.post("/api/orders", {
       items: orderItems,
       address,
       paymentMethod,
       total,
     });
 
+    console.log("ORDER RESPONSE:", res.data); // 🔥 DEBUG
+
     clearCart();
     toast.success("Order placed successfully 🎉");
     navigate("/order-success");
 
   } catch (error) {
-    toast.error("Failed to place order ❌");
+
+    console.error("ORDER ERROR:", error.response?.data || error.message);
+
+    toast.error(
+      error.response?.data?.message || "Order failed — check backend"
+    );
   }
 };
+
 
 
   return (
