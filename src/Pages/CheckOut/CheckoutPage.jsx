@@ -65,24 +65,35 @@ export default function CheckoutPage() {
       items: orderItems,
       address,
       paymentMethod,
-      total,
+      total: Number(total),
     });
 
-    console.log("ORDER RESPONSE:", res.data); // 🔥 DEBUG
+    // 🔥 IMPORTANT — check success properly
+    if (res.status === 200 || res.status === 201) {
+      clearCart();
+      toast.success("Order placed successfully 🎉");
+      navigate("/order-success");
+      return;
+    }
 
-    clearCart();
-    toast.success("Order placed successfully 🎉");
-    navigate("/order-success");
+    throw new Error("Order not successful");
 
   } catch (error) {
+    console.log("ORDER ERROR:", error);
 
-    console.error("ORDER ERROR:", error.response?.data || error.message);
+    // 🔥 If backend already created order but frontend failed
+    if (error.response?.status === 201) {
+      clearCart();
+      navigate("/order-success");
+      return;
+    }
 
     toast.error(
-      error.response?.data?.message || "Order failed — check backend"
+      error.response?.data?.message || "Order failed ❌"
     );
   }
 };
+
 
 
 
